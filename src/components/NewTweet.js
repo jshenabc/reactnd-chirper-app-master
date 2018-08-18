@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { handleAddTweet } from '../actions/tweets'
 
 class NewTweet extends Component {
   //when you type the submit button will change so we need to use this.state.
@@ -15,8 +17,10 @@ class NewTweet extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
     const { text } = this.state
+    const { dispatch, id } = this.props
     console.log('new tweet',text)
     //todo: add tweet to stroe
+    dispatch(handleAddTweet(text, id))
     this.setState(() => ({
       text: ''
     }))
@@ -53,4 +57,4 @@ class NewTweet extends Component {
 }
 
 
-export default NewTweet
+export default connect()(NewTweet)
