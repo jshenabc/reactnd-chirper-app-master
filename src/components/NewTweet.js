@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { handleAddTweet } from '../actions/tweets'
+import { Redirect } from 'react-router-dom'
 
 class NewTweet extends Component {
   //when you type the submit button will change so we need to use this.state.
   state= {
     text: '',
+    toHome: false,
   }
 
   handleChange = (e) => {
@@ -18,16 +20,20 @@ class NewTweet extends Component {
     e.preventDefault()
     const { text } = this.state
     const { dispatch, id } = this.props
-    console.log('new tweet',text)
+    //console.log('new tweet',text)
     //todo: add tweet to stroe
     dispatch(handleAddTweet(text, id))
     this.setState(() => ({
-      text: ''
+      text: '',
+      toHome: id ? false : true,
     }))
   }
   render() {
-    const { text } = this.state
+    const { text, toHome } = this.state
     const tweetLeft = 280 - text.length
+    if (toHome === true ) {
+      return <Redirect to='/'/>
+    }
     return (
       <div>
          <h3 className='center'>Compose new Tweet</h3>
